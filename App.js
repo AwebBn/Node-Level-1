@@ -4,9 +4,15 @@ const port = 3000
 const mongoose = require('mongoose');
 app.use(express.urlencoded({extended:true }))
 const Mydata = require("./models/myschema")
+app.set("view engine", "ejs")
+
 
 app.get('/', (req,res) =>{
-    res.sendFile("./Views/Home.html", {root: __dirname})
+    Mydata.find().then((result) =>{
+        res.render("home",{arr: result})
+    }).catch((error) =>{
+        console.log(error)
+    })
 })
 
 mongoose.connect("mongodb://awebsolo23_db_user:zOWM9B8u4c9GQGOP@ac-amenl6c-shard-00-00.76o1uhu.mongodb.net:27017,ac-amenl6c-shard-00-01.76o1uhu.mongodb.net:27017,ac-amenl6c-shard-00-02.76o1uhu.mongodb.net:27017/all-data?ssl=true&replicaSet=atlas-h1r9j2-shard-0&authSource=admin&appName=Cluster0")
